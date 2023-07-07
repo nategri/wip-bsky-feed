@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  feed:
+    build: .
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./feed-generator/:/root/bsky-feed:rw
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+    environment:
+      - BS_USERNAME=comraderobot.bsky.social
+      - BS_APP_PASSWORD=dont-store-this
+      - BS_FEED_HOSTNAME=bluesky-trek-feed.com
+      - BS_RECORD_NAME=whats-trek
+      - BS_FEED_DISPLAY_NAME=What's Trek (Beta)
+      - BS_FEED_VERBOSE_DESC=A Bluesky feed for all things Star Trek. Currently flaky as HELL. By @comraderobot.bsky.social.
+      #- BS_FEED_AVATAR_PATH=""
+      - YOUR_FEED_URI=at://did:plc:jn2c6bcr5rcwlmfcfn5k37sm/app.bsky.feed.generator/whats-trek
+      - HOSTNAME=bluesky-trek-feed.com
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
