@@ -1,6 +1,0 @@
-gunicorn
-httpcore==0.17.2
-atproto==0.0.16
-peewee~=3.16.2
-Flask~=2.3.2
-python-dotenv~=1.0.0

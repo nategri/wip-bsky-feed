@@ -14,14 +14,19 @@ services:
       - ./certbot/conf/:/etc/nginx/ssl/:ro
     environment:
       - BS_USERNAME=comraderobot.bsky.social
-      - BS_APP_PASSWORD=dont-store-this
+      - BS_APP_PASSWORD=zscu-lwah-ltfj-2cdg
       - BS_FEED_HOSTNAME=bluesky-trek-feed.com
       - BS_RECORD_NAME=whats-trek
       - BS_FEED_DISPLAY_NAME=What's Trek (Beta)
       - BS_FEED_VERBOSE_DESC=A Bluesky feed for all things Star Trek. Currently flaky as HELL. By @comraderobot.bsky.social.
       #- BS_FEED_AVATAR_PATH=""
-      - YOUR_FEED_URI=at://did:plc:jn2c6bcr5rcwlmfcfn5k37sm/app.bsky.feed.generator/whats-trek
-      - HOSTNAME=bluesky-trek-feed.com
+      - FEEDGEN_PORT=3000
+      - FEEDGEN_LISTENHOST=localhost
+      - FEEDGEN_SQLITE_LOCATION=db.sqlite
+      - FEEDGEN_SUBSCRIPTION_ENDPOINT=wss://bsky.social
+      - FEEDGEN_HOSTNAME=bluesky-trek-feed.com
+      - FEEDGEN_PUBLISHER_DID=did:plc:jn2c6bcr5rcwlmfcfn5k37sm
+      - FEEDGEN_SUBSCRIPTION_RECONNECT_DELAY=3000
   certbot:
     image: certbot/certbot:latest
     volumes:
